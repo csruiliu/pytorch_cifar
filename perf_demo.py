@@ -3,6 +3,7 @@ import torchvision
 import torchvision.transforms as transforms
 
 from models.lenet import LeNet
+from models.alexnet import AlexNet
 
 
 def main():
@@ -33,7 +34,13 @@ def main():
     # build model
     #################################
 
-    model = LeNet()
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+    # model = LeNet()
+    model = AlexNet()
+
+    # put the model on GPU
+    model.to(device)
 
     loss_func = torch.nn.CrossEntropyLoss()
 
@@ -49,7 +56,8 @@ def main():
 
         for i, data in enumerate(trainloader, 0):
             # get the inputs; data is a list of [inputs, labels]
-            inputs, labels = data
+            # send the inputs
+            inputs, labels = data[0].to(device), data[1].to(device)
 
             # reset gradient to zero
             optimizer.zero_grad()
