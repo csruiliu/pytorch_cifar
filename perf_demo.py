@@ -4,11 +4,12 @@ import torchvision.transforms as transforms
 
 from models.lenet import LeNet
 from models.alexnet import AlexNet
+from models.vgg import VGG
 
 
 def main():
     #################################
-    # hyperparameter
+    # hyper-parameter
     #################################
     batch_size = 32
     learn_rate = 0.005
@@ -34,12 +35,12 @@ def main():
     # build model
     #################################
 
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
     # model = LeNet()
-    model = AlexNet()
+    # model = AlexNet()
+    model = VGG(conv_layer=11)
 
     # put the model on GPU
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     loss_func = torch.nn.CrossEntropyLoss()
