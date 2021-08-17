@@ -5,6 +5,9 @@ import torchvision.transforms as transforms
 from models.lenet import LeNet
 from models.alexnet import AlexNet
 from models.vgg import VGG
+from models.mobilenet import MobileNet
+from models.mobilenet_v2 import MobileNetV2
+from models.resnet import ResNet
 
 
 def main():
@@ -37,7 +40,10 @@ def main():
 
     # model = LeNet()
     # model = AlexNet()
-    model = VGG(conv_layer=11)
+    # model = VGG(conv_layer=11)
+    # model = MobileNet()
+    # model = MobileNetV2()
+    model = ResNet(residual_layer=18)
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
