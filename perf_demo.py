@@ -2,12 +2,15 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
+from timeit import default_timer as timer
+
 from models.lenet import LeNet
 from models.alexnet import AlexNet
 from models.vgg import VGG
 from models.mobilenet import MobileNet
 from models.mobilenet_v2 import MobileNetV2
 from models.resnet import ResNet
+from models.zfnet import ZFNet
 
 
 def main():
@@ -43,7 +46,8 @@ def main():
     # model = VGG(conv_layer=11)
     # model = MobileNet()
     # model = MobileNetV2()
-    model = ResNet(residual_layer=18)
+    # model = ResNet(residual_layer=18)
+    model = ZFNet()
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -56,6 +60,10 @@ def main():
     #################################
     # train model
     #################################
+
+    print('start training model')
+
+    start_time = timer()
 
     for epoch in range(train_epoch):
         correct_prediction = 0
@@ -86,6 +94,11 @@ def main():
             total_prediction += labels.size(0)
 
         print(f'Accuracy after epoch {epoch+1}: {correct_prediction / total_prediction}')
+
+    end_time = timer()
+    proc_time = end_time - start_time
+
+    print(f'finish training, training time:{proc_time}')
 
 
 if __name__ == "__main__":
