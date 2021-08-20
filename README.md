@@ -8,7 +8,7 @@ The implementation of AlexNet follows the architecture proposed in the [paper](h
 
 ## DenseNet ##
 
-The implementations of DenseNet [121, 169, 201, 264] follow the architecture proposed in the [paper](https://arxiv.org/pdf/1608.06993.pdf). To fit the CIFAR-10, I slightly modify the kernel size of the front convolutional layer from 7x7 to 3x3, and omit the first 3x3 max pooling layer. ***DenseNet paper won the CVPR 2017 best paper. Its idea is to strengthen the feature reuse (any two specific layers can communicate through a shortcut).***
+The implementations of DenseNet [121, 169, 201, 264] follow the architecture proposed in the [paper](https://arxiv.org/pdf/1608.06993.pdf). To fit the CIFAR-10, I slightly modify the kernel size of the front convolutional layer from 7x7 to 3x3, omit the first 3x3 max pooling layer, and change the kernel size of the global average pool layer to 4x4. ***DenseNet paper won the CVPR 2017 best paper. Its idea is to strengthen the feature reuse (any two specific layers can communicate through a shortcut).***
 
 ## EfficientNet ##
 
