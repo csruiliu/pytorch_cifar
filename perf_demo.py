@@ -12,6 +12,7 @@ from models.mobilenet_v2 import MobileNetV2
 from models.resnet import ResNet
 from models.zfnet import ZFNet
 from models.densenet import DenseNet
+from models.efficientnet import EfficientNet
 
 
 def main():
@@ -49,7 +50,8 @@ def main():
     # model = MobileNetV2()
     # model = ResNet(residual_layer=18)
     # model = ZFNet()
-    model = DenseNet(residual_layer=121)
+    # model = DenseNet(residual_layer=121)
+    model = EfficientNet()
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
