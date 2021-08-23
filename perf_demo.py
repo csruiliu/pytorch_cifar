@@ -13,6 +13,7 @@ from models.resnet import ResNet
 from models.zfnet import ZFNet
 from models.densenet import DenseNet
 from models.efficientnet import EfficientNet
+from models.resnext import ResNext
 
 
 def main():
@@ -51,7 +52,8 @@ def main():
     # model = ResNet(residual_layer=18)
     # model = ZFNet()
     # model = DenseNet(residual_layer=121)
-    model = EfficientNet()
+    # model = EfficientNet()
+    model = ResNext(cardinality=2)
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
