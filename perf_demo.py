@@ -15,6 +15,7 @@ from models.densenet import DenseNet
 from models.efficientnet import EfficientNet
 from models.resnext import ResNext
 from models.inception import Inception
+from models.shufflenet import ShuffleNet
 
 
 def main():
@@ -55,7 +56,8 @@ def main():
     # model = DenseNet(residual_layer=121)
     # model = EfficientNet()
     # model = ResNext(cardinality=2)
-    model = Inception()
+    # model = Inception()
+    model = ShuffleNet(num_groups=2)
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
