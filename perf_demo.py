@@ -17,6 +17,7 @@ from models.resnext import ResNext
 from models.inception import Inception
 from models.shufflenet import ShuffleNet
 from models.shufflenet_v2 import ShuffleNetV2
+from models.squeezenet import SqueezeNet
 
 def main():
     #################################
@@ -58,7 +59,8 @@ def main():
     # model = ResNext(cardinality=2)
     # model = Inception()
     # model = ShuffleNet(num_groups=2)
-    model = ShuffleNetV2(complexity=0.5)
+    # model = ShuffleNetV2(complexity=0.5)
+    model = SqueezeNet()
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
