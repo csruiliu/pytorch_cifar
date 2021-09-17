@@ -18,6 +18,8 @@ from models.inception import Inception
 from models.shufflenet import ShuffleNet
 from models.shufflenet_v2 import ShuffleNetV2
 from models.squeezenet import SqueezeNet
+from models.xception import Xception
+
 
 def main():
     #################################
@@ -60,7 +62,8 @@ def main():
     # model = Inception()
     # model = ShuffleNet(num_groups=2)
     # model = ShuffleNetV2(complexity=0.5)
-    model = SqueezeNet()
+    # model = SqueezeNet()
+    model = Xception()
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
