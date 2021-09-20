@@ -1,6 +1,7 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
+from torchinfo import summary
 
 from timeit import default_timer as timer
 
@@ -27,7 +28,7 @@ def main():
     #################################
     batch_size = 32
     learn_rate = 0.005
-    train_epoch = 10
+    train_epoch = 1
 
     #################################
     # prepare the training data
@@ -55,7 +56,7 @@ def main():
     # model = MobileNet()
     # model = MobileNetV2()
     # model = ResNet(residual_layer=18)
-    # model = ZFNet()
+    model = ZFNet()
     # model = DenseNet(residual_layer=121)
     # model = EfficientNet()
     # model = ResNext(cardinality=2)
@@ -63,7 +64,7 @@ def main():
     # model = ShuffleNet(num_groups=2)
     # model = ShuffleNetV2(complexity=0.5)
     # model = SqueezeNet()
-    model = Xception()
+    # model = Xception()
 
     # put the model on GPU
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -115,6 +116,12 @@ def main():
     proc_time = end_time - start_time
 
     print(f'finish training, training time:{proc_time}')
+    model_stats = summary(model, input_size=(batch_size, 3, 32, 32))
+    total_parameters = model_stats.total_params
+    total_memory = (model_stats.to_megabytes(model_stats.total_input) +
+                    model_stats.float_to_megabytes(model_stats.total_output + model_stats.total_params))
+    print(f'Total Parameters: {total_parameters}')
+    print(f'Total Memory (MB): {total_memory}')
 
 
 if __name__ == "__main__":
