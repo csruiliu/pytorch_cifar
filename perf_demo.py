@@ -2,6 +2,7 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 from torchinfo import summary
+import argparse
 
 from timeit import default_timer as timer
 
@@ -26,10 +27,27 @@ def main():
     #################################
     # hyper-parameter
     #################################
-    batch_size = 32
-    learn_rate = 0.005
-    train_epoch = 1
+    parser = argparse.ArgumentParser()
 
+    parser.add_argument('-m', '--modelname', action='store', type=str, default='resnet',
+                        choices=['lenet', 'alexnet', 'vgg', 'mobilenet', 'mobilenetv2', 'resnet', 
+                                 'zfnet', 'densenet', 'efficientnet', 'resnext', 'inception', 
+                                 'shufflenet', 'shufflenetv2', 'squeezenet', 'xception'],
+                        help='set the model arch')
+    parser.add_argument('-b', '--batchsize', action='store', type=int, default=32,
+                        help='set the training batch size')
+    parser.add_argument('-r', '--lr', action='store', type=float, default=0.005,
+                        help='set the learning rate')
+    parser.add_argument('-e', '--epoch', action='store', type=int, default=1,
+                        help='set the number of training epoch')
+
+    args = parser.parse_args()
+    
+    model_name = args.modelname
+    batch_size = args.batchsize
+    learn_rate = args.lr
+    train_epoch = args.epoch
+    
     #################################
     # prepare the training data
     #################################
@@ -50,24 +68,42 @@ def main():
     # build model
     #################################
 
-    # model = LeNet()
-    # model = AlexNet()
-    # model = VGG(conv_layer=11)
-    # model = MobileNet()
-    # model = MobileNetV2()
-    # model = ResNet(residual_layer=18)
-    model = ZFNet()
-    # model = DenseNet(residual_layer=121)
-    # model = EfficientNet()
-    # model = ResNext(cardinality=2)
-    # model = Inception()
-    # model = ShuffleNet(num_groups=2)
-    # model = ShuffleNetV2(complexity=0.5)
-    # model = SqueezeNet()
-    # model = Xception()
+    if model_name == 'lenet':
+        model = LeNet()
+    elif model_name == 'alexnet':
+        model = AlexNet()
+    elif model_name == 'vgg':
+        model = VGG(conv_layer=11)
+    elif model_name == 'mobilenet':
+        model = MobileNet()
+    elif model_name == 'mobilenetv2':
+        model = MobileNetV2()
+    elif model_name == 'resnet':
+        model = ResNet(residual_layer=18)
+    elif model_name == 'zfnet':
+        model = ZFNet()
+    elif model_name == 'densenet':
+        model = DenseNet(residual_layer=121)
+    elif model_name == 'efficientnet':
+        model = EfficientNet()
+    elif model_name == 'resnext':
+        model = ResNext(cardinality=2)
+    elif model_name == 'inception':
+        model = Inception()
+    elif model_name == 'shufflenet':
+        model = ShuffleNet(num_groups=2)
+    elif model_name == 'shufflenetv2':
+        model = ShuffleNetV2(complexity=0.5)
+    elif model_name == 'squeezenet':
+        model = SqueezeNet()
+    elif model_name == 'xception':
+        model = Xception()
+    else:
+        raise ValueError('not supported model name')
 
     # put the model on GPU
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:0")
     model.to(device)
 
     loss_func = torch.nn.CrossEntropyLoss()
@@ -119,7 +155,8 @@ def main():
     model_stats = summary(model, input_size=(batch_size, 3, 32, 32))
     total_parameters = model_stats.total_params
     total_memory = (model_stats.to_megabytes(model_stats.total_input) +
-                    model_stats.float_to_megabytes(model_stats.total_output + model_stats.total_params))
+                    model_stats.float_to_megabytes(model_stats.total_output + 
+                    model_stats.total_params))
     print(f'Total Parameters: {total_parameters}')
     print(f'Total Memory (MB): {total_memory}')
 
