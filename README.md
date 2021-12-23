@@ -1,6 +1,6 @@
 # Train CNN models with CIFAR10 on PyTorch
 
-All the models are implemented and tested on PyTorch 2.5.0
+All the models are implemented and tested on PyTorch 1.10.1
 
 ## AlexNet
 
